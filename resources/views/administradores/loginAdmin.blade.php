@@ -3,16 +3,10 @@
 @section('content')
 <section class="flex justify-center items-center mt-9">
     <div class="w-[500px] p-6 rounded-lg shadow-lg bg-gray-100">
-        <h1 class="text-2xl font-semibold text-gray-700 text-center mb-4">Preencha o formulário</h1>
-        <form action="/registro" method="post" class="flex flex-col space-y-3">
+        <h1 class="text-2xl font-semibold text-gray-700 text-center mb-4">
+            Login</h1>
+        <form action="/loginAdmin" method="post" class="flex flex-col space-y-3">
     @csrf
-
-    <!-- Nome -->
-    <input type="text" name="nome" placeholder="Seu nome" 
-        class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-    @error('nome')
-    <p class="text-red-500 text-sm">{{ $message }}</p>
-    @enderror
 
     <!-- Email -->
     <input type="email" name="email" placeholder="Seu email" 
@@ -21,12 +15,6 @@
     <p class="text-red-500 text-sm">{{ $message }}</p>
     @enderror
 
-    <!-- Telefone -->
-    <input type="text" name="phone" placeholder="Seu telefone" 
-        class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-    @error('phone')
-    <p class="text-red-500 text-sm">{{ $message }}</p>
-    @enderror
 
     <!-- Senha -->
     <input type="password" name="password" id="password" placeholder="Palavra-passe" 

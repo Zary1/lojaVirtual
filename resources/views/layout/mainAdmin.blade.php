@@ -19,10 +19,10 @@
     </head>
     <body>
   
-        <header class="h-1/4  w-full">
+        <header class="  w-full">
             <button class="sm:hidden "> <i class="fas fa-bars text-2xl"></i></button>
            <!-- div pesquisa e users -->
-            <div class="flex h-[80px] justify-between items-center w-full">
+            <div class="flex p-7 justify-between items-center w-full">
             
              <div class="flex  space-x-4">
                 <div class="ml-9 flex items-center justify-center">
@@ -39,13 +39,15 @@
                     </form>
                    
              </div>
-             <div class="mr-[90px] flex text-xl  text-blue-500 items-center space-x-4">
+             <div class="mr-[90px] flex text-xl  text-blue-500 items-center space-x-4 relative">
                 <i class="fa-solid fa-user hover:cursor-pointer" id="utente"></i>
-                 </div>
-                <ul id="show_users" class="bg-blue-500 p-4 mt-[190px] hidden">
-                <div class="utentes">
+                <div id="show_users" class="hidden absolute right-0 top-full mt-2 bg-blue-500
+                 p-4 w-[150px] shadow-lg rounded-lg">
+              <ul class="utentes">
                 <div>
-            <p class="nome_admin text-white">Ane</p>
+                  @if(Auth::guard('admin')->check())
+            <p class="nome_admin text-white">{{Auth::guard('admin')->user()->nome}}</p>
+            @endif
           </div>
         <li class="nav-item">
           <a class=" text-white" href="/registro">Registrar</a>
@@ -57,31 +59,36 @@
         <li class="nav-item">
           <form action="/logoutAdmin" method="post">
             @csrf
-          <a class=" text-white" onclick="event.preventDefault(); this.closest('form').submit()">Sair</a>
+          <a class="text-white hover:cursor-pointer" onclick="event.preventDefault(); this.closest('form').submit()">Sair</a>
           </form>
         
         </li>
-        </div> 
-                </ul>
+             </ul> 
+         </div>
+                 </div>
+           
                 
             </div>
-
+        
             
-                </div>
+               
                     <!--div nav-bar  -->
                     <div class="flex bg-gray-100 p-3 items-center ">
                 <nav class="max-auto">
-                    <ul class="flex mt-2 ml-[500px] justify-center  text-xl items-center space-x-9 text-blue-700" >
+                    <ul class="flex mt-2 ml-[500px] justify-center  
+                    text-xl items-center space-x-9 text-blue-700" >
                         <li><a href="">Produtos</a></li>
-                        <li><a href="">Adicionar Produtos</a></li>
+                        <li><a href="/addProduts">Adicionar Produtos</a></li>
                         <li><a href="">Categoria</a></li>
 
-                        <li><a href="">Administradores</a></li>
+                        <li><a href="/allAdmin">Administradores</a></li>
                         
                     </ul>
                 </nav>
 
                 </div>
+           
+              
            </header>
 
 
