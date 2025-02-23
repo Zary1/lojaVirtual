@@ -9,18 +9,33 @@ use Illuminate\Support\Facades\Auth;
 
 class Produt extends Controller
 {
-    public function addProdutos(){
+    public function index(){
+        $produts=Product::all();
         $categories = Categorie::all();  
-    return view('produtos.addProdutos', ['categories' => $categories]);
+      
+        return view('welcome', [
+            'categories' => $categories,
+            'produts' => $produts
+        ]);
+    }
+    public function addProdutos(){
+        $produts=Product::all();
+        $categories = Categorie::all();  
+      
+        return view('produtos.addProdutos', [
+            'categories' => $categories,
+            'produts' => $produts
+        ]);
         
     }
     public function store(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validação da imagem
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-             'categorie_id' => 'required|exists:categories,id',
+            'quantidade' => 'required|numeric|min:0',
+            'categorie_id' => 'required|exists:categories,id',
             'is_on_sale' => 'nullable|boolean',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
         ], [
@@ -32,6 +47,7 @@ class Produt extends Controller
             'image.max' => 'A imagem não pode ter mais de 2MB.',
             'price.required' => 'O campo preço é obrigatório.',
             'price.numeric' => 'O preço deve ser um valor numérico.',
+            'quantidade.numeric' => 'A quantidade deve ser um valor numérico.',
             'price.min' => 'O preço não pode ser negativo.',
             'categorie_id.required' => 'A categoria do produto é obrigatória.',
             'categorie_id.in' => 'A categoria selecionada é inválida.',
@@ -48,6 +64,7 @@ class Produt extends Controller
         $produt->description=$request->description;
         $produt->price=$request->price;
         $produt->categorie_id = $request->categorie_id;
+        $produt->quantidade= $request->quantidade;
         $produt->is_on_sale=isset($request->is_on_sale)? 1: 0;
         $produt->discount_percentage=$request->is_on_sale ?  $request->discount_percentage : null;
 
@@ -75,10 +92,12 @@ class Produt extends Controller
         $produts=Product::all();
         return view('produtos.allProdutos',['produts'=>$produts]);
     }
-    public function destory($id){
+    
+    public function destroy($id){
         $produts=Product::findOrFail($id);
         $produts->delete();
-        return redirect('allProdutos');
+        return redirect('addProduts');
+   
 
     }
 // editar os produtos
@@ -97,19 +116,33 @@ public function editProduts(Request $request,$id){
         $data['image']= $imageName;
     }
      Product::findOrFail($id)->update($data);
-    return redirect('/allProdutos');
+    return redirect('/addProduts');
 }
     // categoria dos telefones 
     public function ShowTelefones(){
-        $produts=Product::where('category','telefone')->get();
+        $categorie=Categorie::where('category_name','telefone')->first();
+        if(!$categorie){
+            return redirect()->back()->with('error', 'Categoria não encontrada!');
+        }
+
+        $produts=Product::where('categorie_id',$categorie->id)->get();
         return view('produtos.categoriaTelefone',['produts'=>$produts]);
     }
     public function ShowComputador(){
-        $produts=Product::where('category','computador')->get();
+        $categorie=Categorie::where('category_name','computador')->first();
+        if(!$categorie){
+            return redirect()->back()->with('error', 'Categoria não encontrada!');
+        }
+
+        $produts=Product::where('categorie_id',$categorie->id)->get();
         return view('produtos.categoriaComputador',['produts'=>$produts]);
     }
     public function ShowTablete(){
-        $produts=Product::where('category','tablete')->get();
+        $categorie=Categorie::where('category_name','tablete')->first();
+        if(!$categorie){
+            return redirect()->back()->with('error', 'Categoria não encontrada!');
+        }
+        $produts=Product::where('categorie_id',$categorie->id)->get();
         return view('produtos.categoriaTablete',['produts'=>$produts]);
     }
     public function ShowPromocao(){
@@ -117,7 +150,11 @@ public function editProduts(Request $request,$id){
         return view('produtos.categoriaPromocao',['produts'=>$produts]);
     }
     public function ShowCameras(){
-        $produts=Product::where('category','cameras')->get();
+        $categorie=Categorie::where('category_name','cameras')->first();
+        if(!$categorie){
+            return redirect()->back()->with('error', 'Categoria não encontrada!');
+        }
+        $produts=Product::where('categorie_id',$categorie->id)->get();
         return view('produtos.categoriaCameras',['produts'=>$produts]);
     }
 

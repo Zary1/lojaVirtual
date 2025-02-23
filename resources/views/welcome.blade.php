@@ -19,16 +19,134 @@
 </section>
 
 <!-- section mais vendidos -->
- <section>
+<section class="flex flex-col justify-center items-center mt-4">
+    <h1 class="text-2xl font-bold text-center mb-6">Produtos mais vendidos</h1>
 
- </section>
+    @if($produts->isEmpty())
+        <p class="text-center text-gray-500">Nenhum produto disponível.</p>
+    @else
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-1/1 px-4">
+            @foreach($produts as $produt)
+                <div class="bg-white shadow-lg rounded-lg p-9 flex flex-col">
+                    <img src="{{ asset('img/fotos/' . $produt->image) }}" 
+                    alt="{{ $produt->name }}" class="w-full h-40 object-cover rounded-lg mb-4">
+                    
+                    <h2 class="text-lg font-semibold text-center">{{ $produt->name }}</h2>
+                    <p class="text-sm text-gray-500 text-center">{{ ucfirst($produt->category_name) }}</p>
+                    
+                    <p class="text-lg font-bold text-green-600 mt-2 text-center">
+                        @if($produt->is_on_sale)
+                            <span class="line-through text-red-500">
+                                 {{ number_format($produt->price, 2, ',', '.') }}€
+                            </span>
+                            <span class="ml-2">
+                                {{ number_format($produt->price * (1 - $produt->discount_percentage / 100), 2, ',', '.') }}€
+                            </span>
+                        @else
+                             {{ number_format($produt->price, 2, ',', '.') }}€
+                        @endif
+                    </p>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</section>
+
+
+
+
+ 
  <!-- section mais categoia -->
- <section>
-    
- </section>
+<!-- section mais vendidos -->
+<section class="flex flex-col justify-center items-center mt-9 bg-gray-100">
+    <h1 class="text-3xl font-bold text-center mt-2">Categoria</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-9  p-9">
+        <div class="bg-white shadow-lg rounded-full p-4 flex flex-col items-center justify-center
+         w-60 h-50">
+            <img src="/img/tabletes/tableteRapido.png" alt=""
+             class="w-40 h-24 object-cover rounded-lg mb-4">
+            <p class="text-lg text-black-500 text-center">Computador</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-full p-4 flex flex-col items-center justify-center
+         w-60 h-50">
+            <img src="/img/tabletes/tableteRapido.png" alt=""
+             class="w-40 h-24 object-cover rounded-lg mb-4">
+            <p class="text-lg text-black-500 text-center">Telefone</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-full p-4 flex flex-col items-center justify-center
+         w-60 h-50">
+            <img src="/img/tabletes/tableteRapido.png" alt=""
+             class="w-40 h-24 object-cover rounded-lg mb-4">
+            <p class="text-lg text-black-500 text-center">Tablets</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-full p-4 flex flex-col items-center justify-center
+         w-60 h-50">
+            <img src="/img/tabletes/tableteRapido.png" alt=""
+             class="w-40 h-24 object-cover rounded-lg mb-4">
+            <p class="text-lg text-black-500 text-center">Câmeras</p>
+        </div>
+    </div>
+</section>
+
+
 
  <!-- section mais promocao e novidades  -->
- <section>
-    
- </section>
+ <section class="flex flex-col sm:flex-row justify-center items-center mt-4 space-y-8 sm:space-y-0 sm:space-x-8">
+  <div class="relative w-full sm:w-[45%]">
+    <div class="absolute top-1/2 left-1/4 transform -translate-x-1/2 
+    -translate-y-1/2 text-white text-center px-4">
+      <p class="text-xl font-semibold">Ofertas da Páscoa</p>
+      <h1 class="text-3xl font-bold mt-2">Até 50% de desconto</h1>
+      <a href="" class="btn  mr-9 inline-block mt-4 px-6 py-3
+       bg-blue-800 text-white rounded-md hover:bg-blue-500 transition duration-300">Comprar</a>
+    </div>
+    <img src="/img/promocaoTelefone.png" alt="Imagem Promoção" class="w-full h-auto rounded-lg">
+  </div>
+  <div class="relative w-full sm:w-[45%]">
+  <div class="absolute top-1/2 left-1/4 transform -translate-x-1/2 
+    -translate-y-1/2 text-white text-center px-4">
+      <p class="text-xl font-semibold">Novidades</p>
+      <h1 class="text-xl font-bold mt-2">Ouvi as tuas musicas onde quiseres</h1>
+      <a href="" class="btn  mr-9 inline-block mt-4 px-6 py-3
+       bg-blue-800 text-white rounded-md hover:bg-blue-500 transition duration-300">Comprar</a>
+    </div>
+    <img src="/img/fundoAuriculares.png" alt="Imagem Promoção" class="w-full h-auto rounded-lg">
+  </div>
+</section>
+
+
+ <!-- envio -->
+<!-- section envio -->
+<section class="flex flex-col justify-center items-center mt-9 bg-gray-100">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-9 p-9">
+        
+        <!-- Retirada disponível -->
+        <div class="bg-white shadow-lg rounded-full p-4 flex flex-col items-center justify-center w-60 h-50">
+            <i class="fas fa-store-alt text-4xl text-blue-500 mb-3"></i>
+            <p class="text-lg text-black-500 text-center">Retirada disponível</p>
+        </div>
+
+        <!-- Frete grátis -->
+        <div class="bg-white shadow-lg rounded-full p-6 flex flex-col items-center justify-center w-60 h-50">
+            <i class="fas fa-truck text-4xl text-blue-500 mb-3"></i>
+            <p class="text-lg text-black-500 text-center">Frete grátis acima de 40€</p>
+        </div>
+
+        <!-- Garantia de preços baixos -->
+        <div class="bg-white shadow-lg rounded-full p-4 flex flex-col items-center justify-center w-60 h-50">
+            <i class="fas fa-tags text-4xl text-blue-500 mb-3"></i>
+            <p class="text-lg text-black-500 text-center">Garantia de preços baixos</p>
+        </div>
+
+        <!-- Disponível 24/7 -->
+        <div class="bg-white shadow-lg rounded-full p-4 flex flex-col items-center justify-center w-60 h-50">
+            <i class="fas fa-clock text-4xl text-blue-500 mb-3"></i>
+            <p class="text-lg text-black-500 text-center">Disponível para você 24/7</p>
+        </div>
+
+    </div>
+</section>
+
+
 @endsection

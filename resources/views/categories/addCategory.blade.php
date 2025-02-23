@@ -84,5 +84,7 @@
             @endforeach
         </table>
     </div>
+    <!-- show produtos -->
+     
 </section>
 @endsection

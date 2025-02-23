@@ -15,7 +15,7 @@
                     <img src="{{ asset('img/fotos/' . $produt->image) }}" 
                     alt="{{ $produt->name }}" class="w-full h-40 object-cover rounded-lg">
                     <h2 class="text-lg font-semibold mt-3">{{ $produt->name }}</h2>
-                    <p class="text-sm text-gray-500">{{ ucfirst($produt->category) }}</p>
+                    <p class="text-sm text-gray-500">{{ ucfirst($produt->category_name) }}</p>
                     <p class="text-lg font-bold text-green-600 mt-2">
                         @if($produt->is_on_sale)
                             <span class="line-through text-red-500">

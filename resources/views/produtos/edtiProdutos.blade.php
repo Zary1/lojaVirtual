@@ -55,7 +55,8 @@
             <!-- Imagem do Produto -->
             <div class="flex flex-col">
                 <label for="image" class="text-lg font-medium">Imagem do Produto:</label>
-                <input type="file" name="image" accept="image/*" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="file" name="image" accept="image/*" class="p-3 border border-gray-300 rounded-md 
+                focus:outline-none focus:ring-2 focus:ring-blue-500" required >
             </div>
 
             <button type="submit" class="w-full p-3 bg-blue-500 text-white rounded-md

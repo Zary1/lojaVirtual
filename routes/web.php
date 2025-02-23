@@ -6,10 +6,7 @@ use App\Http\Controllers\Produt;
 use App\Http\Controllers\Category;
 use App\Http\Middleware\Authenticate;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/',[Produt::class,'index']);
 // Route Administradores
 Route::get('/admin',[Admin::class,('index')]);
 Route::get('/registro',[Admin::class,('showRegistro')]);
@@ -31,10 +28,10 @@ Route::put('/editCategoria/{id}', [Category::class, 'updateCategorie'])->name('c
 
 // Route Produtos
 Route::get('/addProduts',[Produt::class,'addProdutos'])->middleware(Authenticate::class);
-Route::post('/addProduts',[Produt::class,'store']);      
+Route::post('/addProduts',[Produt::class,'store']);  
+Route::delete('/addProduts/{id}', [Produt::class, 'destroy']);
 Route::get('/allProdutos',[Produt::class,'allProdutos'])->middleware(Authenticate::class);      
-Route::delete('/delete/{id}',[Produt::class,'destory']);   
-Route::get('/edit/{id}',[Produt::class,'showeditProduts']);   
+Route::get('/addProduts/{id}',[Produt::class,'showeditProduts']);   
 Route::put('/edit/{id}',[Produt::class,'editProduts']);   
 Route::get('/categoria/telefone',[Produt::class,'ShowTelefones'])->middleware(Authenticate::class);      
 Route::get('/categoria/computador',[Produt::class,'ShowComputador'])->middleware(Authenticate::class);      
