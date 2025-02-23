@@ -29,12 +29,14 @@
                 <h1 class="text-blue-500 text-2xl">TechZary</h1>
                 </div>
                
-                <form action="" method="post" class="flex rounded-lg" >
+                <form action="/seach" method="post" class="flex rounded-lg" >
+                @csrf
                       <div class=" w-[300px] rounded-lg">
-                        <input type="search" class=" bg-gray-100 w-full rounded-l-lg p-2 text-lg" name="" id="" placeholder="Busca">  </div> 
-                      <div class="bg-blue-500 w-[80px] rounded-r-lg flex items-center justify-center">
+                        <input type="search" class=" bg-gray-100 w-full rounded-l-lg p-2 text-lg"
+                         name="seach" id="" placeholder="Busca">  </div> 
+                      <button type="submit" class="bg-blue-500 w-[80px] rounded-r-lg flex items-center justify-center">
                       <i class="fa-solid fa-magnifying-glass text-white text-lg"></i>
-                      </div>
+                      </button>
                      
                     </form>
                    
@@ -77,9 +79,21 @@
                 <nav class="max-auto">
                     <ul class="flex mt-2 ml-[500px] justify-center  
                     text-xl items-center space-x-9 text-blue-700" >
-                        <li><a href="">Produtos</a></li>
+                        <li><a href="/allProdutos">Home</a></li>
                         <li><a href="/addProduts">Adicionar Produtos</a></li>
-                        <li><a href="">Categoria</a></li>
+                        <li><a href="/addCategory">Adicionar Categoria</a></li>
+           <!-- Categoria (Dropdown) -->
+           <li class="relative group">
+                <a href="#" class="hover:text-blue-500 px-4 py-2">Categoria</a>
+                <!-- Dropdown -->
+                <ul class="absolute left-2 hidden bg-white shadow-lg rounded-lg mt-2 py-2 w-40 group-hover:block">
+                    <li><a href="/categoria/telefone" class="block px-4 py-2 hover:bg-blue-100">Telefone</a></li>
+                    <li><a href="/categoria/computador" class="block px-4 py-2 hover:bg-blue-100">Computador</a></li>
+                    <li><a href="/categoria/tablete" class="block px-4 py-2 hover:bg-blue-100">Tablete</a></li>
+                    <li><a href="/categoria/cameras" class="block px-4 py-2 hover:bg-blue-100">Câmeras</a></li>
+                    <li><a href="/categoria/promocao" class="block px-4 py-2 hover:bg-blue-100">Promoção</a></li>
+                </ul>
+            </li>
 
                         <li><a href="/allAdmin">Administradores</a></li>
                         

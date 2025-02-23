@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Categorie;
+use Illuminate\Support\Facades\Auth;
+
 class Produt extends Controller
 {
-    public function index(){
-        return view('produtos.index');
+    public function addProdutos(){
+        $categories = Categorie::all();  
+    return view('produtos.addProdutos', ['categories' => $categories]);
+        
     }
     public function store(Request $request){
         $request->validate([
@@ -15,7 +20,7 @@ class Produt extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validação da imagem
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'category' => 'required|in:telefone,computador,tablete,cameras', // Incluindo a categoria "cameras"
+             'categorie_id' => 'required|exists:categories,id',
             'is_on_sale' => 'nullable|boolean',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
         ], [
@@ -28,17 +33,128 @@ class Produt extends Controller
             'price.required' => 'O campo preço é obrigatório.',
             'price.numeric' => 'O preço deve ser um valor numérico.',
             'price.min' => 'O preço não pode ser negativo.',
-            'category.required' => 'A categoria do produto é obrigatória.',
-            'category.in' => 'A categoria selecionada é inválida.',
+            'categorie_id.required' => 'A categoria do produto é obrigatória.',
+            'categorie_id.in' => 'A categoria selecionada é inválida.',
             'is_on_sale.boolean' => 'O campo "Está em promoção" deve ser verdadeiro ou falso.',
             'discount_percentage.numeric' => 'O desconto deve ser um valor numérico.',
             'discount_percentage.min' => 'O desconto não pode ser menor que 0%.',
             'discount_percentage.max' => 'O desconto não pode ser maior que 100%.',
         ]);
+       
+        
+
         $produt= new Product();
+        $produt->name=$request->name;
+        $produt->description=$request->description;
+        $produt->price=$request->price;
+        $produt->categorie_id = $request->categorie_id;
+        $produt->is_on_sale=isset($request->is_on_sale)? 1: 0;
+        $produt->discount_percentage=$request->is_on_sale ?  $request->discount_percentage : null;
+
+        //  imagem
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $requestImage=$request->image;
+            $extension=$requestImage->extension();
+            $imageName=md5( $requestImage->getClientOriginalName(). "." .$extension);
+            $requestImage->move(public_path('img/fotos'),$imageName);
+            $produt->image= $imageName;
+
+        }
+        $admin_id=Auth::guard('admin')->user();
+        $produt->admin_id=$admin_id->id;
+
      
-      
+        $produt->save();
+        return redirect('/addProduts')->with('success', 'Produto cadastrado com sucesso!');
+
           
-        return redirect('index')->with('msg','produto adicionado com sucesso');
+       
+    }
+
+    public function allProdutos(){
+        $produts=Product::all();
+        return view('produtos.allProdutos',['produts'=>$produts]);
+    }
+    public function destory($id){
+        $produts=Product::findOrFail($id);
+        $produts->delete();
+        return redirect('allProdutos');
+
+    }
+// editar os produtos
+public function showeditProduts($id){
+    $produt=Product::findOrFail($id);
+    return view('produtos.edtiProdutos',['produt'=>$produt]);
+}
+public function editProduts(Request $request,$id){
+    $data=$request->all();
+
+    if($request->hasFile('image') && $request->file('image')->isValid()){
+        $requestImage=$request->image;
+        $extension=$requestImage->extension();
+        $imageName=md5( $requestImage->getClientOriginalName(). "." .$extension);
+        $requestImage->move(public_path('img/fotos'),$imageName);
+        $data['image']= $imageName;
+    }
+     Product::findOrFail($id)->update($data);
+    return redirect('/allProdutos');
+}
+    // categoria dos telefones 
+    public function ShowTelefones(){
+        $produts=Product::where('category','telefone')->get();
+        return view('produtos.categoriaTelefone',['produts'=>$produts]);
+    }
+    public function ShowComputador(){
+        $produts=Product::where('category','computador')->get();
+        return view('produtos.categoriaComputador',['produts'=>$produts]);
+    }
+    public function ShowTablete(){
+        $produts=Product::where('category','tablete')->get();
+        return view('produtos.categoriaTablete',['produts'=>$produts]);
+    }
+    public function ShowPromocao(){
+        $produts=Product::where('is_on_sale','1')->get();
+        return view('produtos.categoriaPromocao',['produts'=>$produts]);
+    }
+    public function ShowCameras(){
+        $produts=Product::where('category','cameras')->get();
+        return view('produtos.categoriaCameras',['produts'=>$produts]);
+    }
+
+    // pesquisar produtos
+    public function showSeach(){
+        return view('produtos.seach');
+    }
+ 
+  
+    public function seach(Request $request){
+        $seach = $request->input('seach'); 
+    if ($seach) {
+        // Buscando os produtos com o nome similar ao que foi pesquisado
+        $produts = Product::where('name', 'like', '%' . $seach . '%')->get();
+
+        // Verificando se não há produtos encontrados
+        if ($produts->isEmpty()) {
+            return view('produtos.seach', [
+                'produts' => [], 
+                'seach' => 'Nenhum produto encontrado.'
+            ]);
+        }
+
+        // Caso haja produtos encontrados, retorna a view com os produtos
+        return view('produtos.seach', ['produts' => $produts]);
+    } else {
+        // Se não houver termo de pesquisa, pode redirecionar de volta ou mostrar algo
+        return view('produtos.seach', [
+            'produts' => [], 
+            'seachVazia' => 'Por favor, insira um termo para a busca.'
+        ]);
+
     }
 }
+
+
+
+   
+}
+
