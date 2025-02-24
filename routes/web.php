@@ -59,6 +59,8 @@ Route::post('/seach',[Produt::class,'seach'])->middleware(Authenticate::class);
 Route::post('/sendContacto',[Contactos::class,'sendContacto']); 
 Route::get('/main',[Contactos::class,'main'])->name('layout.main'); 
 
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
