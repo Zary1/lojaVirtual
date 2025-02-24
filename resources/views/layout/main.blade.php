@@ -100,13 +100,25 @@ justify-between w-full max-w-[1400px] mx-auto p-6 gap-6" id="contactos">
         @endif
         <form action="/sendContacto" method="post" class="flex flex-col gap-4">
         @csrf
+        @error('name')
+        <p class="text-red-500">{{$message}}</p>
+        @enderror
             <input type="text" name="name" id="" placeholder="Seu nome"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-            <input type="email" name="email" id="" placeholder="Seu email"
+                @error('email')
+        <p class="text-red-500">{{$message}}</p>
+        @enderror
+                <input type="email" name="email" id="" placeholder="Seu email"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-            <input type="tel" name="phone" id="" placeholder="Seu telefone"
+                @error('phone')
+        <p class="text-red-500">{{$message}}</p>
+        @enderror
+                <input type="tel" name="phone" id="" placeholder="Seu telefone"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-            <textarea name="message" id="" placeholder="Deixe a sua mensagem"
+                @error('message')
+        <p class="text-red-500">{{$message}}</p>
+        @enderror
+                <textarea name="message" id="" placeholder="Deixe a sua mensagem"
                 class="w-full h-32 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
 
             <button class="bg-white p-3 hover:bg-blue-500" type="submit">Enviar</button>

@@ -16,7 +16,8 @@ Route::get('/categoryTelefone',[FrontEnd::class,'categoryTelefone']);
 Route::get('/categoriaTablet',[FrontEnd::class,'categoriaTablet']); 
 Route::get('/categoriaCamera',[FrontEnd::class,'categoriaCamera']); 
 Route::get('/categoriaPromocao',[FrontEnd::class,'categoriaPromocao']); 
-Route::get('/main',[Contactos::class,'main'])->name('layout.main'); 
+
+Route::get('/detalheProdut/{id}',[FrontEnd::class,'detalheProdut']); 
 
    
 
@@ -56,3 +57,14 @@ Route::post('/seach',[Produt::class,'seach'])->middleware(Authenticate::class);
 
 // Route Contatos
 Route::post('/sendContacto',[Contactos::class,'sendContacto']); 
+Route::get('/main',[Contactos::class,'main'])->name('layout.main'); 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

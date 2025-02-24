@@ -64,4 +64,9 @@ class FrontEnd extends Controller
             $produts=Product::where('is_on_sale','1')->get();
             return view('front_end.categoriaPromocao',['produts'=>$produts]);
         }
+        // pagina detalhe
+        public function detalheProdut($id){
+            $detalheProduto=Product::findOrFail($id);
+            return view('front_end.detalheProdut',['detalheProduto'=>$detalheProduto]);
+        }
 }

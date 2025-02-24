@@ -27,6 +27,7 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-1/1 px-4">
             @foreach($produts as $produt)
+            <a href="/detalheProdut/{{ $produt->id}}">
                 <div class="bg-white shadow-lg rounded-lg p-9 flex flex-col">
                     <img src="{{ asset('img/fotos/' . $produt->image) }}" 
                     alt="{{ $produt->name }}" class="w-full h-40 object-cover rounded-lg mb-4">
@@ -47,6 +48,7 @@
                         @endif
                     </p>
                 </div>
+                </a>
             @endforeach
             
         </div>
