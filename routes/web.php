@@ -3,10 +3,23 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Produt;
-use App\Http\Controllers\Category;
+use App\Http\Controllers\Category; 
+use App\Http\Controllers\FrontEnd; 
+use App\Http\Controllers\Contactos; 
 use App\Http\Middleware\Authenticate;
 
-Route::get('/',[Produt::class,'index']);
+// front end
+Route::get('/',[FrontEnd::class,'index']);
+Route::get('/showAllProdutos',[FrontEnd::class,'showAllProdutos']);
+Route::get('/categoryCp',[FrontEnd::class,'categoryCp']); 
+Route::get('/categoryTelefone',[FrontEnd::class,'categoryTelefone']); 
+Route::get('/categoriaTablet',[FrontEnd::class,'categoriaTablet']); 
+Route::get('/categoriaCamera',[FrontEnd::class,'categoriaCamera']); 
+Route::get('/categoriaPromocao',[FrontEnd::class,'categoriaPromocao']); 
+Route::get('/main',[Contactos::class,'main'])->name('layout.main'); 
+
+   
+
 // Route Administradores
 Route::get('/admin',[Admin::class,('index')]);
 Route::get('/registro',[Admin::class,('showRegistro')]);
@@ -39,4 +52,7 @@ Route::get('/categoria/tablete',[Produt::class,'ShowTablete'])->middleware(Authe
 Route::get('/categoria/cameras',[Produt::class,'ShowCameras'])->middleware(Authenticate::class);      
 Route::get('/categoria/promocao',[Produt::class,'ShowPromocao'])->middleware(Authenticate::class);      
 Route::get('/seach',[Produt::class,'showSeach'])->middleware(Authenticate::class);      
-Route::post('/seach',[Produt::class,'seach'])->middleware(Authenticate::class);      
+Route::post('/seach',[Produt::class,'seach'])->middleware(Authenticate::class);   
+
+// Route Contatos
+Route::post('/sendContacto',[Contactos::class,'sendContacto']); 

@@ -9,15 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class Produt extends Controller
 {
-    public function index(){
-        $produts=Product::all();
-        $categories = Categorie::all();  
-      
-        return view('welcome', [
-            'categories' => $categories,
-            'produts' => $produts
-        ]);
-    }
+    
+
+
+   
     public function addProdutos(){
         $produts=Product::all();
         $categories = Categorie::all();  
@@ -103,7 +98,9 @@ class Produt extends Controller
 // editar os produtos
 public function showeditProduts($id){
     $produt=Product::findOrFail($id);
-    return view('produtos.edtiProdutos',['produt'=>$produt]);
+    $categorie=Categorie::all();
+ 
+    return view('produtos.edtiProdutos',['produt'=>$produt, 'categories'=> $categorie]);
 }
 public function editProduts(Request $request,$id){
     $data=$request->all();

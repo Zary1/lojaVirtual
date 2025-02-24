@@ -32,10 +32,11 @@
             <!-- Categoria -->
             <div class="flex flex-col">
                 <label for="category" class="text-lg font-medium">Categoria:</label>
-                <select name="category" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="telefone" >Telefone</option>
-                    <option value="computador" >Computador</option>
-                    <option value="tablete" >Tablete</option>
+                <select name="categorie_id" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    @endforeach
+                   
                 </select>
             </div>
 
@@ -56,7 +57,7 @@
             <div class="flex flex-col">
                 <label for="image" class="text-lg font-medium">Imagem do Produto:</label>
                 <input type="file" name="image" accept="image/*" class="p-3 border border-gray-300 rounded-md 
-                focus:outline-none focus:ring-2 focus:ring-blue-500" required >
+                focus:outline-none focus:ring-2 focus:ring-blue-500" >
             </div>
 
             <button type="submit" class="w-full p-3 bg-blue-500 text-white rounded-md
