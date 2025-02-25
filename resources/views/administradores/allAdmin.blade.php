@@ -25,7 +25,8 @@
                         <form action="/delete/{{$admin->id}}" method="post">
                             @csrf
                             @method('DELETE')
-                        <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition ml-2">Excluir</button>
+                        <button class="bg-red-500 text-white px-3 py-1
+                         rounded hover:bg-red-600 transition ml-2">Excluir</button>
                         </form>
                         
                     </td>

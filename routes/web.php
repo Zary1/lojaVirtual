@@ -6,6 +6,7 @@ use App\Http\Controllers\Produt;
 use App\Http\Controllers\Category; 
 use App\Http\Controllers\FrontEnd; 
 use App\Http\Controllers\Contactos; 
+use App\Http\Controllers\Carrinho; 
 use App\Http\Middleware\Authenticate;
 
 // front end
@@ -16,8 +17,14 @@ Route::get('/categoryTelefone',[FrontEnd::class,'categoryTelefone']);
 Route::get('/categoriaTablet',[FrontEnd::class,'categoriaTablet']); 
 Route::get('/categoriaCamera',[FrontEnd::class,'categoriaCamera']); 
 Route::get('/categoriaPromocao',[FrontEnd::class,'categoriaPromocao']); 
-
 Route::get('/detalheProdut/{id}',[FrontEnd::class,'detalheProdut']); 
+// Route Carinho
+Route::get('/cart', [Carrinho::class, 'showCart']);
+Route::post('/cart/add/{id}', [Carrinho::class, 'addToCart']);
+Route::post('/favorito/{id}', [Carrinho::class, 'favorito']);
+Route::get('/favorito', [Carrinho::class, 'showfavorito']);
+Route::delete('/cart/add/{id}', [Carrinho::class, 'removeFromCart']);
+Route::put('/cart/add/{id}', [Carrinho::class, 'updateCart']);
 
    
 

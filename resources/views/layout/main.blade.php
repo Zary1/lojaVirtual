@@ -41,8 +41,23 @@
              </div>
              <div class="mr-[90px] flex text-xl  text-blue-500 items-center space-x-4">
                 <i class="fa-solid fa-user"></i>
-                <i class="fa-solid fa-cart-shopping"></i>
-                <i class="fa-solid fa-heart"></i>
+                <a href="/cart" class="relative">
+    <i class="fa-solid fa-cart-shopping text-2xl text-bleu-800"></i>
+    <span class="absolute -top-2 -right-3 bg-blue-700 
+    text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-md">
+    {{ \App\Models\Cart::where('user_id', Auth::id())->
+        orWhere('session_id', session()->getId())->cartItems()->count() }}
+    </span>
+</a>
+<a href="/favorito" class="relative">
+    <i class="fa-solid fa-heart text-2xl text-bleu-800"></i>
+    <span class="absolute -top-2 -right-3 bg-blue-700 
+    text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-md">
+    {{ \App\Models\Cart::where('user_id', Auth::id())
+        ->orWhere('session_id', session()->getId())->favoriteItems()->count() }}
+    </span>
+</a>
+          
             </div>
                 </div>
                     <!--div nav-bar  -->

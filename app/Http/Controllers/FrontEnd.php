@@ -69,4 +69,5 @@ class FrontEnd extends Controller
             $detalheProduto=Product::findOrFail($id);
             return view('front_end.detalheProdut',['detalheProduto'=>$detalheProduto]);
         }
+      
 }
